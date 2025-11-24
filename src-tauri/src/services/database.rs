@@ -482,19 +482,19 @@ fn timestamp_to_datetime(timestamp: i64) -> DateTime<Utc> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tempfile::tempdir;
+    use tempfile::TempDir;
 
-    fn create_test_db() -> DatabaseService {
-        let temp_dir = tempdir().unwrap();
+    fn create_test_db() -> (DatabaseService, TempDir) {
+        let temp_dir = TempDir::new().unwrap();
         let db_path = temp_dir.path().join("test.db");
         let db = DatabaseService::new(&db_path).unwrap();
         db.run_migrations().unwrap();
-        db
+        (db, temp_dir)
     }
 
     #[test]
     fn test_create_conversation() {
-        let db = create_test_db();
+        let (db, _temp_dir) = create_test_db();
 
         let request = CreateConversationRequest {
             title: Some("Test Conversation".to_string()),
@@ -509,7 +509,7 @@ mod tests {
 
     #[test]
     fn test_create_and_get_messages() {
-        let db = create_test_db();
+        let (db, _temp_dir) = create_test_db();
 
         let conv = db
             .create_conversation(CreateConversationRequest {
