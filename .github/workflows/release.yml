@@ -1,0 +1,121 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux:
+    name: Build Linux (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x86_64
+            target: x86_64-unknown-linux-gnu
+            runner: ubuntu-22.04
+          # - arch: aarch64
+          #   target: aarch64-unknown-linux-gnu
+          #   runner: ubuntu-22.04
+
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Cache Rust
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            libsecret-1-dev
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build Tauri
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: 'Claude for Linux ${{ github.ref_name }}'
+          releaseBody: |
+            ## Claude for Linux ${{ github.ref_name }}
+
+            **This is an unofficial community client for Claude on Linux.**
+
+            ### Installation
+
+            #### AppImage (Recommended)
+            ```bash
+            chmod +x claude-for-linux_*.AppImage
+            ./claude-for-linux_*.AppImage
+            ```
+
+            #### Debian/Ubuntu
+            ```bash
+            sudo dpkg -i claude-for-linux_*.deb
+            ```
+
+            #### Fedora/RHEL
+            ```bash
+            sudo rpm -i claude-for-linux_*.rpm
+            ```
+
+            ### Changes
+            See [CHANGELOG.md](https://github.com/edward-playground/claude-desktop-linux/blob/main/CHANGELOG.md) for details.
+
+            ---
+            ⚠️ **Disclaimer**: This is NOT an official Anthropic product.
+          releaseDraft: true
+          prerelease: false
+          args: --target ${{ matrix.target }}
+
+  create-checksums:
+    name: Create Checksums
+    needs: build-linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Create checksums
+        run: |
+          cd artifacts
+          find . -type f \( -name "*.AppImage" -o -name "*.deb" -o -name "*.rpm" \) -exec sha256sum {} \; > checksums.txt
+          cat checksums.txt
+
+      - name: Upload checksums
+        uses: actions/upload-artifact@v4
+        with:
+          name: checksums
+          path: artifacts/checksums.txt

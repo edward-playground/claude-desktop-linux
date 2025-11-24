@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /A \"c:\\Users\\edmbo\\claude-desktop-linux\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

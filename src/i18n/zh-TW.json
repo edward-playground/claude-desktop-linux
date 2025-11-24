@@ -1,0 +1,138 @@
+{
+  "app": {
+    "name": "Claude for Linux",
+    "tagline": "非官方社群客戶端",
+    "description": "這是 Claude 的非官方社群桌面客戶端，與 Anthropic 無關。"
+  },
+  "common": {
+    "save": "儲存",
+    "cancel": "取消",
+    "delete": "刪除",
+    "edit": "編輯",
+    "close": "關閉",
+    "back": "返回",
+    "next": "下一步",
+    "finish": "完成",
+    "loading": "載入中...",
+    "error": "錯誤",
+    "success": "成功",
+    "retry": "重試",
+    "copy": "複製",
+    "copied": "已複製！",
+    "search": "搜尋",
+    "settings": "設定",
+    "newChat": "新對話"
+  },
+  "wizard": {
+    "welcome": {
+      "title": "歡迎使用 Claude for Linux",
+      "subtitle": "非官方社群客戶端",
+      "disclaimer": "這不是 Anthropic 的官方產品，而是開源社群客戶端。",
+      "continue": "繼續"
+    },
+    "apiKey": {
+      "title": "設定 API 金鑰",
+      "description": "輸入您的 Anthropic API 金鑰以開始使用。您可以從 Anthropic 控制台取得。",
+      "label": "API 金鑰",
+      "placeholder": "sk-ant-...",
+      "getKey": "取得 API 金鑰",
+      "testing": "正在驗證 API 金鑰...",
+      "valid": "API 金鑰有效！",
+      "invalid": "API 金鑰無效，請檢查後重試。"
+    },
+    "storage": {
+      "title": "資料儲存",
+      "description": "選擇對話的儲存方式。",
+      "normal": {
+        "title": "一般模式",
+        "description": "對話會儲存在本地以便日後存取。"
+      },
+      "privacy": {
+        "title": "隱私模式",
+        "description": "對話不會被儲存，關閉應用程式後將會遺失。"
+      }
+    },
+    "complete": {
+      "title": "設定完成！",
+      "description": "開始與 Claude 對話。",
+      "tip1": "按 Ctrl+N 開始新對話",
+      "tip2": "按 Ctrl+, 開啟設定",
+      "tip3": "按 Ctrl+Enter 發送訊息"
+    }
+  },
+  "chat": {
+    "placeholder": "輸入訊息...",
+    "send": "發送",
+    "stop": "停止",
+    "thinking": "Claude 正在思考...",
+    "empty": {
+      "title": "開始對話",
+      "description": "發送訊息以開始與 Claude 對話。"
+    },
+    "error": {
+      "network": "網路錯誤，請檢查您的連線。",
+      "auth": "驗證失敗，請檢查您的 API 金鑰。",
+      "rateLimit": "請求過於頻繁，請稍後再試。",
+      "generic": "發生錯誤，請重試。"
+    }
+  },
+  "sidebar": {
+    "conversations": "對話",
+    "noConversations": "尚無對話",
+    "deleteConfirm": "確定要刪除這個對話嗎？"
+  },
+  "settings": {
+    "title": "設定",
+    "general": {
+      "title": "一般",
+      "theme": "主題",
+      "themeLight": "淺色",
+      "themeDark": "深色",
+      "themeSystem": "跟隨系統",
+      "language": "語言"
+    },
+    "api": {
+      "title": "API",
+      "key": "API 金鑰",
+      "keySet": "已設定 API 金鑰",
+      "keyNotSet": "尚未設定 API 金鑰",
+      "changeKey": "更改 API 金鑰",
+      "model": "預設模型",
+      "maxTokens": "最大 Token 數",
+      "temperature": "溫度",
+      "proxy": "代理伺服器 URL（可選）",
+      "proxyPlaceholder": "http://proxy:port",
+      "timeout": "超時（秒）"
+    },
+    "privacy": {
+      "title": "隱私",
+      "privacyMode": "隱私模式",
+      "privacyModeDesc": "不將對話儲存到磁碟",
+      "clearData": "清除所有資料",
+      "clearDataDesc": "刪除所有對話、設定和 API 金鑰",
+      "clearDataConfirm": "確定嗎？此操作無法復原。"
+    },
+    "about": {
+      "title": "關於",
+      "version": "版本",
+      "repository": "原始碼",
+      "license": "授權"
+    }
+  },
+  "diagnostics": {
+    "title": "診斷",
+    "apiKey": "API 金鑰",
+    "network": "網路",
+    "storage": "儲存",
+    "checking": "檢查中...",
+    "ok": "正常",
+    "error": "錯誤",
+    "exportLogs": "匯出日誌"
+  },
+  "models": {
+    "claude-sonnet-4-20250514": "Claude Sonnet 4",
+    "claude-opus-4-5-20251101": "Claude Opus 4.5",
+    "claude-haiku-4-5-20251001": "Claude Haiku 4.5",
+    "claude-3-5-sonnet-20241022": "Claude 3.5 Sonnet"
+  }
+}

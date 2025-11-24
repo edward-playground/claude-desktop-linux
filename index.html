@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Claude for Linux</title>
+    <meta name="description" content="Unofficial Community Desktop Client for Claude on Linux" />
+    <style>
+      /* Prevent flash of unstyled content */
+      html {
+        background-color: hsl(0 0% 100%);
+      }
+      html.dark {
+        background-color: hsl(224 71% 4%);
+      }
+      @media (prefers-color-scheme: dark) {
+        html:not(.light) {
+          background-color: hsl(224 71% 4%);
+        }
+      }
+    </style>
+    <script>
+      // Apply theme before page renders to prevent flash
+      (function() {
+        const stored = localStorage.getItem('claude-ui-storage');
+        if (stored) {
+          try {
+            const state = JSON.parse(stored);
+            const theme = state?.state?.theme;
+            if (theme === 'dark') {
+              document.documentElement.classList.add('dark');
+            } else if (theme === 'light') {
+              document.documentElement.classList.add('light');
+            }
+          } catch (e) {}
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

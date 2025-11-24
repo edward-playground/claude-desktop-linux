@@ -1,0 +1,138 @@
+{
+  "app": {
+    "name": "Claude for Linux",
+    "tagline": "Unofficial Community Client",
+    "description": "This is an unofficial community desktop client for Claude. Not affiliated with Anthropic."
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "retry": "Retry",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "search": "Search",
+    "settings": "Settings",
+    "newChat": "New Chat"
+  },
+  "wizard": {
+    "welcome": {
+      "title": "Welcome to Claude for Linux",
+      "subtitle": "Unofficial Community Client",
+      "disclaimer": "This is NOT an official Anthropic product. It is an open-source community client.",
+      "continue": "Continue"
+    },
+    "apiKey": {
+      "title": "Set Up Your API Key",
+      "description": "Enter your Anthropic API key to get started. You can get one from the Anthropic Console.",
+      "label": "API Key",
+      "placeholder": "sk-ant-...",
+      "getKey": "Get an API key",
+      "testing": "Validating API key...",
+      "valid": "API key is valid!",
+      "invalid": "Invalid API key. Please check and try again."
+    },
+    "storage": {
+      "title": "Data Storage",
+      "description": "Choose how your conversations are stored.",
+      "normal": {
+        "title": "Normal Mode",
+        "description": "Conversations are saved locally for easy access."
+      },
+      "privacy": {
+        "title": "Privacy Mode",
+        "description": "Conversations are not saved. They will be lost when you close the app."
+      }
+    },
+    "complete": {
+      "title": "You're All Set!",
+      "description": "Start chatting with Claude.",
+      "tip1": "Press Ctrl+N to start a new conversation",
+      "tip2": "Press Ctrl+, to open settings",
+      "tip3": "Use Ctrl+Enter to send a message"
+    }
+  },
+  "chat": {
+    "placeholder": "Type a message...",
+    "send": "Send",
+    "stop": "Stop",
+    "thinking": "Claude is thinking...",
+    "empty": {
+      "title": "Start a Conversation",
+      "description": "Send a message to begin chatting with Claude."
+    },
+    "error": {
+      "network": "Network error. Please check your connection.",
+      "auth": "Authentication failed. Please check your API key.",
+      "rateLimit": "Rate limited. Please wait a moment.",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "sidebar": {
+    "conversations": "Conversations",
+    "noConversations": "No conversations yet",
+    "deleteConfirm": "Are you sure you want to delete this conversation?"
+  },
+  "settings": {
+    "title": "Settings",
+    "general": {
+      "title": "General",
+      "theme": "Theme",
+      "themeLight": "Light",
+      "themeDark": "Dark",
+      "themeSystem": "System",
+      "language": "Language"
+    },
+    "api": {
+      "title": "API",
+      "key": "API Key",
+      "keySet": "API key is set",
+      "keyNotSet": "No API key set",
+      "changeKey": "Change API Key",
+      "model": "Default Model",
+      "maxTokens": "Max Tokens",
+      "temperature": "Temperature",
+      "proxy": "Proxy URL (optional)",
+      "proxyPlaceholder": "http://proxy:port",
+      "timeout": "Timeout (seconds)"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "privacyMode": "Privacy Mode",
+      "privacyModeDesc": "Don't save conversations to disk",
+      "clearData": "Clear All Data",
+      "clearDataDesc": "Delete all conversations, settings, and API key",
+      "clearDataConfirm": "Are you sure? This action cannot be undone."
+    },
+    "about": {
+      "title": "About",
+      "version": "Version",
+      "repository": "Repository",
+      "license": "License"
+    }
+  },
+  "diagnostics": {
+    "title": "Diagnostics",
+    "apiKey": "API Key",
+    "network": "Network",
+    "storage": "Storage",
+    "checking": "Checking...",
+    "ok": "OK",
+    "error": "Error",
+    "exportLogs": "Export Logs"
+  },
+  "models": {
+    "claude-sonnet-4-20250514": "Claude Sonnet 4",
+    "claude-opus-4-5-20251101": "Claude Opus 4.5",
+    "claude-haiku-4-5-20251001": "Claude Haiku 4.5",
+    "claude-3-5-sonnet-20241022": "Claude 3.5 Sonnet"
+  }
+}
