@@ -3,7 +3,7 @@
 use tauri::{AppHandle, Emitter, State};
 
 use crate::error::AppError;
-use crate::models::{AvailableModel, Message, StreamChunk};
+use crate::models::{AvailableModel, Message};
 use crate::services::api_client::ApiClient;
 use crate::state::AppState;
 
