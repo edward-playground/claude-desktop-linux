@@ -13,7 +13,6 @@ import { cn } from '@/lib/utils';
 type WizardStep = 'welcome' | 'apiKey' | 'storage' | 'complete';
 
 export function FirstRunWizard() {
-  const { t } = useTranslation();
   const [step, setStep] = useState<WizardStep>('welcome');
 
   const renderStep = () => {

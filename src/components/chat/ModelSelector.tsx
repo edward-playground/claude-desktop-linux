@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import {
   Select,
   SelectContent,
@@ -16,7 +15,6 @@ const models = [
 ];
 
 export function ModelSelector() {
-  const { t } = useTranslation();
   const settings = useSettingsStore((state) => state.settings);
   const setSetting = useSettingsStore((state) => state.setSetting);
 

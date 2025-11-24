@@ -47,7 +47,7 @@ interface ConversationsState {
   clearMessages: () => void;
 }
 
-export const useConversationsStore = create<ConversationsState>((set, get) => ({
+export const useConversationsStore = create<ConversationsState>((set, _get) => ({
   conversations: [],
   currentMessages: [],
   isLoading: false,

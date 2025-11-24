@@ -66,7 +66,7 @@ export function MessageItem({ message }: MessageItemProps) {
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               components={{
-                code({ node, className, children, ...props }) {
+                code({ className, children, ...props }) {
                   const match = /language-(\w+)/.exec(className || '');
                   const isInline = !match && !className;
 

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useAppStore } from '@/stores/app.store';
 import { useUIStore } from '@/stores/ui.store';
 import { useConversationsStore } from '@/stores/conversations.store';
@@ -9,7 +8,6 @@ import { SettingsDialog } from '@/components/settings/SettingsDialog';
 import { cn } from '@/lib/utils';
 
 export function MainLayout() {
-  const { t } = useTranslation();
   const sidebarOpen = useUIStore((state) => state.sidebarOpen);
   const sidebarWidth = useUIStore((state) => state.sidebarWidth);
   const settingsDialogOpen = useUIStore((state) => state.settingsDialogOpen);

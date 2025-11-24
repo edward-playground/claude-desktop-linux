@@ -1,3 +1,4 @@
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Plus, Settings, MessageSquare, Pin, Trash2 } from 'lucide-react';
 import { useAppStore } from '@/stores/app.store';
