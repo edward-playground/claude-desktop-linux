@@ -209,7 +209,7 @@ jobs:
         run: pnpm build
 
       - name: Build Tauri (debug)
-        run: pnpm tauri build --debug --bundles none
+        run: pnpm tauri build --debug --no-bundle
 
   security-audit:
     name: Security Audit
