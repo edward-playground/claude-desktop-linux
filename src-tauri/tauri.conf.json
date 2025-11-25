@@ -29,7 +29,7 @@
       "dangerousDisableAssetCspModification": false
     },
     "trayIcon": {
-      "iconPath": "icons/icon.svg",
+      "iconPath": "icons/icon.png",
       "iconAsTemplate": true
     }
   },
@@ -37,7 +37,7 @@
     "active": true,
     "targets": ["appimage", "deb", "rpm"],
     "icon": [
-      "icons/icon.svg"
+      "icons/icon.png"
     ],
     "category": "Utility",
     "shortDescription": "Unofficial Claude Desktop Client for Linux",

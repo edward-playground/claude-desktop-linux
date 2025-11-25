@@ -377,7 +377,7 @@ impl DatabaseService {
                 "streaming_enabled" => settings.streaming_enabled = value == "true",
                 "proxy_url" => {
                     settings.proxy_url = if value.is_empty() { None } else { Some(value) }
-                },
+                }
                 "api_timeout" => settings.api_timeout = value.parse().unwrap_or(120),
                 "max_tokens" => settings.max_tokens = value.parse().unwrap_or(4096),
                 "temperature" => settings.temperature = value.parse().unwrap_or(1.0),
