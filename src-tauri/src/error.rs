@@ -80,9 +80,11 @@ impl From<AppError> for SerializableError {
             AppError::Api(msg) => ("API_ERROR", "API error", Some(msg.clone())),
             AppError::Config(msg) => ("CONFIG_ERROR", "Configuration error", Some(msg.clone())),
             AppError::Io(e) => ("IO_ERROR", "I/O error", Some(e.to_string())),
-            AppError::Serialization(e) => {
-                ("SERIALIZATION_ERROR", "Serialization error", Some(e.to_string()))
-            }
+            AppError::Serialization(e) => (
+                "SERIALIZATION_ERROR",
+                "Serialization error",
+                Some(e.to_string()),
+            ),
             AppError::NotFound(msg) => ("NOT_FOUND", "Not found", Some(msg.clone())),
             AppError::InvalidInput(msg) => ("INVALID_INPUT", "Invalid input", Some(msg.clone())),
             AppError::Network(msg) => ("NETWORK_ERROR", "Network error", Some(msg.clone())),

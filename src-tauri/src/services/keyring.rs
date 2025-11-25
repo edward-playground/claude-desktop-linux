@@ -30,7 +30,9 @@ impl KeyringService {
     /// Store the API key securely
     pub fn set_api_key(&self, api_key: &str) -> Result<()> {
         if api_key.is_empty() {
-            return Err(AppError::InvalidInput("API key cannot be empty".to_string()));
+            return Err(AppError::InvalidInput(
+                "API key cannot be empty".to_string(),
+            ));
         }
 
         let entry = keyring::Entry::new(&self.service_name, API_KEY_ENTRY)?;
@@ -46,9 +48,9 @@ impl KeyringService {
 
         match entry.get_password() {
             Ok(key) => Ok(key),
-            Err(keyring::Error::NoEntry) => {
-                Err(AppError::NotFound("API key not found in keyring".to_string()))
-            }
+            Err(keyring::Error::NoEntry) => Err(AppError::NotFound(
+                "API key not found in keyring".to_string(),
+            )),
             Err(e) => Err(AppError::Keyring(e.to_string())),
         }
     }

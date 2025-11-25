@@ -16,7 +16,9 @@ pub async fn get_api_key(state: State<'_, AppState>) -> Result<String, AppError>
 #[tauri::command]
 pub async fn set_api_key(api_key: String, state: State<'_, AppState>) -> Result<(), AppError> {
     if api_key.is_empty() {
-        return Err(AppError::InvalidInput("API key cannot be empty".to_string()));
+        return Err(AppError::InvalidInput(
+            "API key cannot be empty".to_string(),
+        ));
     }
 
     // Basic validation - Anthropic API keys typically start with "sk-ant-"

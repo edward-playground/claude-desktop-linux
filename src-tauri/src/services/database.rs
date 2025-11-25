@@ -237,10 +237,7 @@ impl DatabaseService {
             .execute("DELETE FROM conversations WHERE id = ?1", [id])?;
 
         if affected == 0 {
-            return Err(AppError::NotFound(format!(
-                "Conversation {} not found",
-                id
-            )));
+            return Err(AppError::NotFound(format!("Conversation {} not found", id)));
         }
 
         tracing::info!("Deleted conversation {}", id);
@@ -363,9 +360,7 @@ impl DatabaseService {
 
     /// Get all settings
     pub fn get_settings(&self) -> Result<AppSettings> {
-        let mut stmt = self
-            .conn
-            .prepare("SELECT key, value FROM settings")?;
+        let mut stmt = self.conn.prepare("SELECT key, value FROM settings")?;
 
         let mut settings = AppSettings::default();
 
@@ -380,7 +375,9 @@ impl DatabaseService {
                 "theme" => settings.theme = value,
                 "language" => settings.language = value,
                 "streaming_enabled" => settings.streaming_enabled = value == "true",
-                "proxy_url" => settings.proxy_url = if value.is_empty() { None } else { Some(value) },
+                "proxy_url" => {
+                    settings.proxy_url = if value.is_empty() { None } else { Some(value) }
+                },
                 "api_timeout" => settings.api_timeout = value.parse().unwrap_or(120),
                 "max_tokens" => settings.max_tokens = value.parse().unwrap_or(4096),
                 "temperature" => settings.temperature = value.parse().unwrap_or(1.0),
@@ -407,7 +404,10 @@ impl DatabaseService {
             ("api_timeout", settings.api_timeout.to_string()),
             ("max_tokens", settings.max_tokens.to_string()),
             ("temperature", settings.temperature.to_string()),
-            ("first_run_completed", settings.first_run_completed.to_string()),
+            (
+                "first_run_completed",
+                settings.first_run_completed.to_string(),
+            ),
             ("privacy_mode", settings.privacy_mode.to_string()),
             ("analytics_enabled", settings.analytics_enabled.to_string()),
         ];
@@ -430,11 +430,9 @@ impl DatabaseService {
     pub fn get_setting(&self, key: &str) -> Result<Option<String>> {
         let value = self
             .conn
-            .query_row(
-                "SELECT value FROM settings WHERE key = ?1",
-                [key],
-                |row| row.get(0),
-            )
+            .query_row("SELECT value FROM settings WHERE key = ?1", [key], |row| {
+                row.get(0)
+            })
             .optional()?;
 
         Ok(value)

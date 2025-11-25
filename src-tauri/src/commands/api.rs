@@ -11,7 +11,9 @@ use crate::state::AppState;
 #[tauri::command]
 pub async fn validate_api_key(api_key: String) -> Result<bool, AppError> {
     if api_key.is_empty() {
-        return Err(AppError::InvalidInput("API key cannot be empty".to_string()));
+        return Err(AppError::InvalidInput(
+            "API key cannot be empty".to_string(),
+        ));
     }
 
     ApiClient::validate_api_key(&api_key).await

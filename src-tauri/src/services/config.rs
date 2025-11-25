@@ -71,17 +71,14 @@ impl ConfigService {
 
     /// Ensure all necessary directories exist
     pub fn ensure_directories(&self) -> Result<()> {
-        std::fs::create_dir_all(&self.paths.config_dir).map_err(|e| {
-            AppError::Config(format!("Failed to create config directory: {}", e))
-        })?;
+        std::fs::create_dir_all(&self.paths.config_dir)
+            .map_err(|e| AppError::Config(format!("Failed to create config directory: {}", e)))?;
 
-        std::fs::create_dir_all(&self.paths.data_dir).map_err(|e| {
-            AppError::Config(format!("Failed to create data directory: {}", e))
-        })?;
+        std::fs::create_dir_all(&self.paths.data_dir)
+            .map_err(|e| AppError::Config(format!("Failed to create data directory: {}", e)))?;
 
-        std::fs::create_dir_all(&self.paths.cache_dir).map_err(|e| {
-            AppError::Config(format!("Failed to create cache directory: {}", e))
-        })?;
+        std::fs::create_dir_all(&self.paths.cache_dir)
+            .map_err(|e| AppError::Config(format!("Failed to create cache directory: {}", e)))?;
 
         // Set restrictive permissions on data directory (owner only)
         #[cfg(unix)]

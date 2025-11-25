@@ -78,7 +78,10 @@ enum StreamEvent {
     #[serde(rename = "content_block_stop")]
     ContentBlockStop {},
     #[serde(rename = "message_delta")]
-    MessageDelta { delta: MessageDeltaData, usage: Option<UsageResponse> },
+    MessageDelta {
+        delta: MessageDeltaData,
+        usage: Option<UsageResponse>,
+    },
     #[serde(rename = "message_stop")]
     MessageStop {},
     #[serde(rename = "ping")]
@@ -129,8 +132,7 @@ impl ApiClient {
 
     /// Create a new API client with proxy
     pub fn new_with_proxy(api_key: String, timeout_secs: u64, proxy_url: &str) -> Result<Self> {
-        let proxy =
-            reqwest::Proxy::all(proxy_url).map_err(|e| AppError::Config(e.to_string()))?;
+        let proxy = reqwest::Proxy::all(proxy_url).map_err(|e| AppError::Config(e.to_string()))?;
 
         let client = reqwest::Client::builder()
             .proxy(proxy)
@@ -171,9 +173,8 @@ impl ApiClient {
         headers.insert(CONTENT_TYPE, HeaderValue::from_static("application/json"));
         headers.insert(
             "x-api-key",
-            HeaderValue::from_str(api_key).map_err(|_| {
-                AppError::InvalidInput("Invalid API key format".to_string())
-            })?,
+            HeaderValue::from_str(api_key)
+                .map_err(|_| AppError::InvalidInput("Invalid API key format".to_string()))?,
         );
         headers.insert(
             "anthropic-version",
@@ -251,7 +252,10 @@ impl ApiClient {
             return match status.as_u16() {
                 401 => Err(AppError::Authentication("Invalid API key".to_string())),
                 429 => Err(AppError::RateLimited(error_text)),
-                _ => Err(AppError::Api(format!("API error ({}): {}", status, error_text))),
+                _ => Err(AppError::Api(format!(
+                    "API error ({}): {}",
+                    status, error_text
+                ))),
             };
         }
 
@@ -340,9 +344,8 @@ async fn stream_response(
         .headers(headers)
         .json(&request);
 
-    let mut event_source = EventSource::new(request_builder).map_err(|e| {
-        AppError::Network(format!("Failed to create event source: {}", e))
-    })?;
+    let mut event_source = EventSource::new(request_builder)
+        .map_err(|e| AppError::Network(format!("Failed to create event source: {}", e)))?;
 
     while let Some(event) = event_source.next().await {
         match event {
