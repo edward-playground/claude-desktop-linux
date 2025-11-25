@@ -10,11 +10,34 @@ echo "  Claude for Linux - One-click Installer"
 echo "============================================"
 echo ""
 
+# Check if running as root
+if [ "$EUID" -eq 0 ]; then
+    echo "Error: Please do not run this script as root."
+    echo "It will ask for sudo when needed."
+    exit 1
+fi
+
 # Detect distribution
 detect_distro() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
-        echo "$ID"
+        # Check ID_LIKE for derivative distros
+        case "$ID" in
+            ubuntu|debian|pop|linuxmint|elementary|zorin) echo "debian" ;;
+            fedora|rhel|centos|rocky|alma) echo "fedora" ;;
+            arch|manjaro|endeavouros|garuda) echo "arch" ;;
+            opensuse*|suse|sles) echo "opensuse" ;;
+            *)
+                # Fallback to ID_LIKE
+                case "$ID_LIKE" in
+                    *debian*|*ubuntu*) echo "debian" ;;
+                    *fedora*|*rhel*) echo "fedora" ;;
+                    *arch*) echo "arch" ;;
+                    *suse*) echo "opensuse" ;;
+                    *) echo "$ID" ;;
+                esac
+                ;;
+        esac
     else
         echo "unknown"
     fi
@@ -27,25 +50,25 @@ echo "Detected: $DISTRO"
 echo ""
 echo "[1/6] Installing system dependencies..."
 case $DISTRO in
-    ubuntu|debian|linuxmint|pop)
+    debian)
         sudo apt-get update -qq
         sudo apt-get install -y -qq \
             build-essential curl wget git file \
             libwebkit2gtk-4.1-dev libssl-dev libgtk-3-dev \
             libayatana-appindicator3-dev librsvg2-dev libsecret-1-dev patchelf
         ;;
-    fedora|rhel|centos)
+    fedora)
         sudo dnf install -y -q \
             gcc gcc-c++ curl wget git file \
             webkit2gtk4.1-devel openssl-devel gtk3-devel \
             libappindicator-gtk3-devel librsvg2-devel libsecret-devel patchelf
         ;;
-    arch|manjaro|endeavouros)
+    arch)
         sudo pacman -S --needed --noconfirm \
             base-devel curl wget git file webkit2gtk openssl gtk3 \
             libappindicator-gtk3 librsvg libsecret patchelf
         ;;
-    opensuse*)
+    opensuse)
         sudo zypper install -y \
             gcc gcc-c++ curl wget git file \
             webkit2gtk3-devel libopenssl-devel gtk3-devel \
@@ -121,21 +144,47 @@ pnpm tauri build
 echo ""
 echo "[6/6] Installing application..."
 case $DISTRO in
-    ubuntu|debian|linuxmint|pop)
+    debian)
         sudo dpkg -i src-tauri/target/release/bundle/deb/*.deb
         ;;
-    fedora|rhel|centos)
+    fedora)
+        sudo rpm -U --force src-tauri/target/release/bundle/rpm/*.rpm 2>/dev/null || \
         sudo rpm -i src-tauri/target/release/bundle/rpm/*.rpm
         ;;
-    arch|manjaro|endeavouros)
-        # For Arch, use the AppImage or install manually
+    arch|opensuse|*)
+        # Use AppImage for Arch, openSUSE, and unknown distros
         echo "Installing AppImage to ~/.local/bin/"
         mkdir -p ~/.local/bin
-        cp src-tauri/target/release/bundle/appimage/*.AppImage ~/.local/bin/claude-for-linux
-        chmod +x ~/.local/bin/claude-for-linux
-        ;;
-    *)
-        echo "Package installed in: $INSTALL_DIR/src-tauri/target/release/bundle/"
+        APPIMAGE=$(find src-tauri/target/release/bundle/appimage -name "*.AppImage" | head -1)
+        if [ -n "$APPIMAGE" ]; then
+            cp "$APPIMAGE" ~/.local/bin/claude-for-linux
+            chmod +x ~/.local/bin/claude-for-linux
+
+            # Create desktop entry
+            mkdir -p ~/.local/share/applications
+            cat > ~/.local/share/applications/claude-for-linux.desktop << 'DESKTOP'
+[Desktop Entry]
+Name=Claude for Linux
+Comment=Unofficial Community Desktop Client for Claude
+Exec=$HOME/.local/bin/claude-for-linux
+Icon=claude-for-linux
+Type=Application
+Categories=Utility;Network;
+StartupWMClass=claude-for-linux
+DESKTOP
+            # Fix the Exec path
+            sed -i "s|\$HOME|$HOME|g" ~/.local/share/applications/claude-for-linux.desktop
+
+            # Add to PATH hint
+            if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+                echo ""
+                echo "Note: Add ~/.local/bin to your PATH:"
+                echo "  echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ~/.bashrc"
+            fi
+        else
+            echo "Error: AppImage not found"
+            exit 1
+        fi
         ;;
 esac
 
@@ -145,4 +194,7 @@ echo "  Installation complete!"
 echo "============================================"
 echo ""
 echo "Run 'claude-for-linux' or find it in your application menu."
+echo ""
+echo "Note: You'll need an Anthropic API key to use the app."
+echo "Get one at: https://console.anthropic.com/"
 echo ""
