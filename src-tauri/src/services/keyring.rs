@@ -81,6 +81,7 @@ impl KeyringService {
     }
 
     /// Get or create an encryption salt for local data encryption
+    #[allow(dead_code)]
     pub fn get_or_create_encryption_salt(&self) -> Result<String> {
         let entry = keyring::Entry::new(&self.service_name, ENCRYPTION_SALT_ENTRY)?;
 
@@ -110,6 +111,7 @@ impl KeyringService {
 }
 
 /// Generate a random 32-byte salt encoded as base64
+#[allow(dead_code)]
 fn generate_random_salt() -> String {
     use ring::rand::{SecureRandom, SystemRandom};
 

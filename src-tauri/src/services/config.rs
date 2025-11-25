@@ -24,6 +24,7 @@ impl ConfigPaths {
     }
 
     /// Get the settings file path
+    #[allow(dead_code)]
     pub fn settings_path(&self) -> PathBuf {
         self.config_dir.join("settings.json")
     }
@@ -34,6 +35,7 @@ impl ConfigPaths {
     }
 
     /// Get the plugins directory path
+    #[allow(dead_code)]
     pub fn plugins_dir(&self) -> PathBuf {
         self.data_dir.join("plugins")
     }
@@ -92,11 +94,13 @@ impl ConfigService {
     }
 
     /// Get the version of the application
+    #[allow(dead_code)]
     pub fn version(&self) -> &str {
         env!("CARGO_PKG_VERSION")
     }
 
     /// Get the application name
+    #[allow(dead_code)]
     pub fn app_name(&self) -> &str {
         Self::APP_NAME
     }

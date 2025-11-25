@@ -53,6 +53,7 @@ struct ApiResponseBody {
 }
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 struct ContentBlock {
     #[serde(rename = "type")]
     content_type: String,
@@ -68,6 +69,7 @@ struct UsageResponse {
 /// Streaming event types
 #[derive(Debug, Deserialize)]
 #[serde(tag = "type")]
+#[allow(dead_code)]
 enum StreamEvent {
     #[serde(rename = "message_start")]
     MessageStart { message: MessageStartData },
@@ -91,12 +93,14 @@ enum StreamEvent {
 }
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 struct MessageStartData {
     id: String,
     model: String,
 }
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 struct DeltaContent {
     #[serde(rename = "type")]
     delta_type: String,
@@ -109,6 +113,7 @@ struct MessageDeltaData {
 }
 
 #[derive(Debug, Deserialize)]
+#[allow(dead_code)]
 struct ErrorData {
     #[serde(rename = "type")]
     error_type: String,

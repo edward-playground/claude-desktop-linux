@@ -117,6 +117,7 @@ pub async fn send_message(
 
 /// Cancel an ongoing stream
 #[tauri::command]
+#[allow(dead_code)]
 pub async fn cancel_stream(_conversation_id: String) -> Result<(), AppError> {
     // The frontend can stop listening to events
     // The tokio task will naturally terminate when the receiver is dropped

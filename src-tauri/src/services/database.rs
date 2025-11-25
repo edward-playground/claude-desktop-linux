@@ -320,6 +320,7 @@ impl DatabaseService {
     }
 
     /// Update a message (typically to add token count or stop reason)
+    #[allow(dead_code)]
     pub fn update_message(
         &self,
         id: &str,

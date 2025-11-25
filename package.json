@@ -82,6 +82,12 @@
     "vite": "^5.4.11",
     "vitest": "^2.1.4"
   },
+  "pnpm": {
+    "overrides": {
+      "esbuild": ">=0.25.0",
+      "prismjs": ">=1.30.0"
+    }
+  },
   "packageManager": "pnpm@9.12.0",
   "engines": {
     "node": ">=20.0.0"
